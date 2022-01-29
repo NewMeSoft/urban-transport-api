@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Api;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\Locality;
+use App\Http\Resources\LocalityResource;
 
 class LocalityController extends Controller
 {
@@ -15,7 +16,7 @@ class LocalityController extends Controller
      */
     public function index()
     {
-        return Locality::all();
+        return LocalityResource::collection(Locality::with('years')->get());
     }
 
     /**
@@ -37,7 +38,7 @@ class LocalityController extends Controller
      */
     public function show($id)
     {
-        return Locality::find($id);
+        return new LocalityResource(Locality::with('years')->findOrFail($id));
     }
 
     /**

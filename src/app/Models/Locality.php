@@ -8,4 +8,8 @@ use Illuminate\Database\Eloquent\Model;
 class Locality extends Model
 {
     use HasFactory;
+
+    public function years() {
+	return $this->hasMany(Year::class);
+    }
 }
