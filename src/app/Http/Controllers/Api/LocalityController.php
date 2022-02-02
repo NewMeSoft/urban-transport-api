@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use Illuminate\Http\Response;
 use App\Models\Locality;
 use App\Http\Resources\LocalityResource;
 use App\Http\Requests\LocalityStoreRequest;
@@ -17,7 +18,7 @@ class LocalityController extends Controller
      */
     public function index()
     {
-        return LocalityResource::collection(Locality::with('years')->get());
+	return LocalityResource::collection(Locality::with('years')->get());
     }
 
     /**
@@ -28,7 +29,7 @@ class LocalityController extends Controller
      */
     public function store(LocalityStoreRequest $request)
     {
-        $location = Locality::create($request->validated());
+	$location = Locality::create($request->validated());
 
 	return new LocalityResource($location);
     }
@@ -51,9 +52,11 @@ class LocalityController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(LocalityStoreRequest $request, Locality $location)
     {
-        //
+	$location->update($request->validated());
+
+	return new LocalityResource($location);
     }
 
     /**
@@ -62,8 +65,11 @@ class LocalityController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(Locality $location)
     {
-        //
+	$location->delete();
+
+	return responce(null, Responce::HTTP_NO_CONTENT);
+
     }
 }
