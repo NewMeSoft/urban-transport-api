@@ -9,6 +9,8 @@ class Locality extends Model
 {
     use HasFactory;
 
+    protected $fillable = ['name'];	
+
     public function years() {
 	return $this->hasMany(Year::class);
     }

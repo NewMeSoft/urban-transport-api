@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\Locality;
 use App\Http\Resources\LocalityResource;
+use App\Http\Requests\LocalityStoreRequest;
 
 class LocalityController extends Controller
 {
@@ -25,9 +26,11 @@ class LocalityController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(LocalityStoreRequest $request)
     {
-        //
+        $location = Locality::create($request->validated());
+
+	return new LocalityResource($location);
     }
 
     /**
